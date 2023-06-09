@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Notiflix from 'notiflix';
 
 const contactsInitialState = [];
 
@@ -13,7 +14,9 @@ const usersSlice = createSlice({
           contact => payload.name.toLowerCase() === contact.name.toLowerCase()
         )
       ) {
-        alert(`${payload.name} is already in contacts`);
+        Notiflix.Notify.failure(
+          `You have already created a contact with the name ${payload.name}`
+        );
         return state;
       }
       return [...state, payload];
