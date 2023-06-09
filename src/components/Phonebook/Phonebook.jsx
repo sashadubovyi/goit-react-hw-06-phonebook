@@ -1,7 +1,7 @@
 const { nanoid } = require('nanoid');
 const { useState } = require('react');
 const { useDispatch } = require('react-redux');
-const { addContact } = require('store/userSlice');
+const { addContact } = require('store/contactsSlice');
 const {
   PhoneBookContainer,
   Title,

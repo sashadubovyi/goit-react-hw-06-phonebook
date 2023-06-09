@@ -8,7 +8,7 @@ import {
   ContactsItem,
   Title,
 } from './Contacts.styled';
-import { removeContact } from 'store/userSlice';
+import { removeContact } from 'store/contactsSlice';
 import Filter from 'components/Filter/Filter';
 
 function Contacts() {

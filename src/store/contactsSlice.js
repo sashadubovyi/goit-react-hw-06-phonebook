@@ -3,8 +3,8 @@ import Notiflix from 'notiflix';
 
 const contactsInitialState = [];
 
-const usersSlice = createSlice({
-  name: 'users',
+const contactsSlice = createSlice({
+  name: 'contacts',
   initialState: contactsInitialState,
 
   reducers: {
@@ -27,5 +27,5 @@ const usersSlice = createSlice({
   },
 });
 
-export const contactsReducer = usersSlice.reducer;
-export const { addContact, removeContact } = usersSlice.actions;
+export const contactsReducer = contactsSlice.reducer;
+export const { addContact, removeContact } = contactsSlice.actions;
