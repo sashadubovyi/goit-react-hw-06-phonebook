@@ -1,39 +1,48 @@
-import React, { useState } from 'react';
-import {
+const { nanoid } = require('nanoid');
+const { useState } = require('react');
+const { useDispatch } = require('react-redux');
+const { addContact } = require('store/userSlice');
+const {
   PhoneBookContainer,
   Title,
   FormContacts,
   InputName,
   ButtonSubmit,
-} from './Phonebook.styled';
+} = require('./Phonebook.styled');
 
-const PhoneBook = ({ handleAddContact }) => {
+function PhoneBook() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const handleChange = evt => {
-    const { name, value } = evt.target;
+  const dispatch = useDispatch();
 
-    if (name === 'name') {
-      setName(value);
-    }
-    if (name === 'number') {
-      setNumber(value);
-    }
-  };
-
-  const handleSubmit = evt => {
+  const onSubmitForm = evt => {
     evt.preventDefault();
 
-    handleAddContact(name, number);
+    dispatch(addContact({ name, number, id: nanoid() }));
+    resetInputs();
+  };
+
+  const resetInputs = () => {
     setName('');
     setNumber('');
+  };
+
+  const handleChange = ({ target: { name, value } }) => {
+    switch (name) {
+      case 'name':
+        return setName(value);
+      case 'number':
+        return setNumber(value);
+      default:
+        return;
+    }
   };
 
   return (
     <PhoneBookContainer>
       <Title>Phonebook</Title>
-      <FormContacts onSubmit={handleSubmit}>
+      <FormContacts onSubmit={onSubmitForm}>
         <InputName
           type="text"
           name="name"
@@ -56,10 +65,10 @@ const PhoneBook = ({ handleAddContact }) => {
           placeholder="Enter your number"
           required
         />
-        <ButtonSubmit type="submit">Add contact</ButtonSubmit>
+        <ButtonSubmit>Add contact</ButtonSubmit>
       </FormContacts>
     </PhoneBookContainer>
   );
-};
+}
 
 export default PhoneBook;

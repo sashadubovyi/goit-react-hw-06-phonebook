@@ -1,28 +1,54 @@
-import React, { Component } from 'react';
-import { ContactsContainer, Title } from './Contacts.styled';
-import FilterInput from 'components/Filter/Filter';
-import ContactItem from 'components/ContactItem/ContactItem';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  ButtonDelete,
+  ContactName,
+  ContactPhone,
+  ContactsContainer,
+  ContactsItem,
+  Title,
+} from './Contacts.styled';
+import { removeContact } from 'store/userSlice';
+import Filter from 'components/Filter/Filter';
 
-class Contacts extends Component {
-  render() {
-    const {
-      filter,
-      handleFilterChange,
-      filteredContacts,
-      handleDeleteContact,
-    } = this.props;
+function Contacts() {
+  const dispatch = useDispatch();
+  const filter = useSelector(state => state.filter);
+  const contacts = useSelector(state => state.contacts);
 
-    return (
-      <ContactsContainer>
-        <Title>Contacts</Title>
-        <FilterInput filter={filter} handleFilterChange={handleFilterChange} />
-        <ContactItem
-          filteredContacts={filteredContacts}
-          handleDeleteContact={handleDeleteContact}
-        />
-      </ContactsContainer>
-    );
-  }
+  const filterContacts = () => {
+    if (filter) {
+      return contacts.filter(contact =>
+        contact.name.toLowerCase().includes(`${filter.toLowerCase()}`)
+      );
+    }
+    return contacts;
+  };
+
+  return (
+    <ContactsContainer>
+      <Filter />
+      <Title>Contacts</Title>
+      <div>
+        {filterContacts().map(contact => (
+          <ContactsItem key={contact.id}>
+            <ContactName key={`${contact.id}-name`}>
+              {contact.name}:
+            </ContactName>
+            <ContactPhone
+              key={`${contact.id}-phone`}
+              href={`tel:${contact.number}`}
+            >
+              {contact.number}
+            </ContactPhone>
+            <ButtonDelete onClick={() => dispatch(removeContact(contact.id))}>
+              Delete
+            </ButtonDelete>
+          </ContactsItem>
+        ))}
+      </div>
+    </ContactsContainer>
+  );
 }
 
 export default Contacts;

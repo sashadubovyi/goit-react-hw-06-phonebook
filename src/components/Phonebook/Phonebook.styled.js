@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PhoneBookContainer = styled.div`
-  min-width: 600px;
+  min-width: 500px;
   display: flex;
   flex-direction: column;
   padding: 30px 40px;
@@ -26,7 +26,7 @@ export const InputName = styled.input`
   outline: transparent;
   padding: 0.7em 1.7em;
   font-size: 18px;
-  width: 50%;
+  width: 65%;
   border: none;
   border-radius: 35px;
   background: #e0e0e0;
