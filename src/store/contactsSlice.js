@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Notiflix from 'notiflix';
 
-const contactsInitialState = [];
-
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: contactsInitialState,
+  initialState: {
+    users: [],
+  },
 
   reducers: {
     addContact(state, { payload }) {
       if (
-        state.find(
+        state.users.find(
           contact => payload.name.toLowerCase() === contact.name.toLowerCase()
         )
       ) {
@@ -19,10 +19,12 @@ const contactsSlice = createSlice({
         );
         return state;
       }
-      return [...state, payload];
+      state.users.push(payload);
     },
     removeContact(state, { payload }) {
-      return state.filter(contact => contact.id !== payload);
+      return {
+        users: state.users.filter(contact => contact.id !== payload),
+      };
     },
   },
 });

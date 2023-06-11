@@ -14,23 +14,17 @@ import Filter from 'components/Filter/Filter';
 function Contacts() {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter);
-  const contacts = useSelector(state => state.contacts);
-
-  const filterContacts = () => {
-    if (filter) {
-      return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(`${filter.toLowerCase()}`)
-      );
-    }
-    return contacts;
-  };
+  const contacts = useSelector(state => state.contacts.users);
+  const filterContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <ContactsContainer>
       <Filter />
       <Title>Contacts</Title>
       <div>
-        {filterContacts().map(contact => (
+        {filterContacts.map(contact => (
           <ContactsItem key={contact.id}>
             <ContactName key={`${contact.id}-name`}>
               {contact.name}:
@@ -41,7 +35,7 @@ function Contacts() {
             >
               {contact.number}
             </ContactPhone>
-            <ButtonDelete onClick={() => dispatch(removeContact(contact.id))}>
+            <ButtonDelete onClick={() => dispatch(removeContact(contact?.id))}>
               Delete
             </ButtonDelete>
           </ContactsItem>
